@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        .sensor-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sensor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .sensor-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .unit {
+            font-size: 0.5em;
+            color: #888;
+        }
+
+        .sensor-timestamp {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .gauge-container {
+            width: 150px;
+            height: 150px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sensor-box, .gauge-container {
+                width: 100%;
+            }
+        }
+        .btn {
+         background-color: DodgerBlue;
+         border: none;
+         color: white;
+         padding: 12px 16px;
+         font-size: 16px;
+         cursor: pointer;
+         position: absolute;
+         top: 8px;
+         left: 16px;
+        }
+       
+        ul {
+         list-style-type: none;
+         margin: 0;
+         padding: 0;
+         overflow: hidden;
+         background-color: #333;
+         position: absolute;
+         float: right;
+         top: 8px;
+         right:16px;
+        }
+
+        li {
+         float: left;
+        }
+
+        li a {
+         display: block;
+         color: white;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+        }
+
+        li a:hover{
+         background-color: #111;
+        }
+
+        
+        /* Darker background on mouse-over */
+        .btn:hover {
+         background-color: RoyalBlue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a href="C:\Users\chara\OneDrive\Documents\d drive\nge intership\hydroponics\sensordashboard.html">Home</a></li>
+        <li><a href="C:\Users\chara\OneDrive\Documents\d drive\nge intership\hydroponics\control.html">Control</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+    <button class="btn"><i class="fa fa-bars"></i> Menu</button>
+    
+    <div class="dashboard">
+        
+
+        <!-- Water Temperature Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Water Temp</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">26.2</span><span class="unit">°C</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:36</div>
+            </div>
+            <div class="gauge-container" id="gauge-temperature"></div>
+        </div>
+
+        <!-- Water pH Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Water pH</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">5.63</span><span class="unit">pH</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:42</div>
+            </div>
+            <div class="gauge-container" id="gauge-pH"></div>
+        </div>
+
+        <!-- Water EC Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Water EC</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">1056</span><span class="unit">µS/cm</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:38</div>
+            </div>
+            <div class="gauge-container" id="gauge-EC"></div>
+        </div>
+
+        <!-- Water Flow Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Water Flow</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">1.6</span><span class="unit">l/min</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:44</div>
+            </div>
+            <div class="gauge-container" id="gauge-flow"></div>
+        </div>
+
+        <!-- Water Level Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Water Level</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">0</span><span class="unit">bool</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:34</div>
+            </div>
+            <div class="gauge-container" id="gauge-level"></div>
+        </div>
+
+        <!-- Air Temperature Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Air Temp</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">26.2</span><span class="unit">°C</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:36</div>
+            </div>
+            <div class="gauge-container" id="gauge-air-temperature"></div>
+        </div>
+
+        <!-- Air Humidity Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Air Humidity</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">0</span><span class="unit">%</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:36</div>
+            </div>
+            <div class="gauge-container" id="gauge-humidity"></div>
+        </div>
+
+        <!-- VPD Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>VPD</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">0</span><span class="unit">Pa</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:36</div>
+            </div>
+            <div class="gauge-container" id="gauge-vpd"></div>
+        </div>
+
+        <!-- Air CO2 Sensor -->
+        <div>
+            <div class="sensor-box">
+                <div class="sensor-header">
+                    <span>Air CO2</span>
+                </div>
+                <div class="sensor-value">
+                    <span class="value">0</span><span class="unit">PPM</span>
+                </div>
+                <div class="sensor-timestamp">6/2 22:06:36</div>
+            </div>
+            <div class="gauge-container" id="gauge-co2"></div>
+        </div>
+
+        <!-- DewPoint Sensor -->
+         <div>
+        <div class="sensor-box">
+            <div class="sensor-header">
+                <span>DewPoint</span>
+            </div>
+            <div class="sensor-value">
+                <span class="value">0</span><span class="unit">°C</span>
+            </div>
+            <div class="sensor-timestamp">6/2 22:06:36</div>
+        </div>
+        <div class="gauge-container" id="gauge-co2"></div>
+    </div>
+
+    <!-- Load Raphael.js first -->
+    <script src="https://cdn.jsdelivr.net/npm/raphael@2.3.0/raphael.min.js"></script>
+    <!-- Load JustGage.js after Raphael.js -->
+    <script src="https://cdn.jsdelivr.net/npm/justgage@1.3.2/justgage.min.js"></script>
+
+    <!-- Initialize the Gauges -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof JustGage !== 'undefined') {
+                // Water Temperature Gauge
+                new JustGage({
+                    id: "gauge-temperature",
+                    value: 26.2,
+                    min: 0,
+                    max: 40,
+                    title: "Water Temp",
+                    label: "°C",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 20
+                    }, {
+                        color: "#00ff00",
+                        lo: 20,
+                        hi: 30
+                    }, {
+                        color: "#ff0000",
+                        lo: 30,
+                        hi: 40
+                    }]
+                });
+
+                // Water pH Gauge
+                new JustGage({
+                    id: "gauge-pH",
+                    value: 5.63,
+                    min: 0,
+                    max: 14,
+                    title: "Water pH",
+                    label: "pH",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 4
+                    }, {
+                        color: "#00ff00",
+                        lo: 4,
+                        hi: 8
+                    }, {
+                        color: "#ff0000",
+                        lo: 8,
+                        hi: 14
+                    }]
+                });
+
+                // Water EC Gauge
+                new JustGage({
+                    id: "gauge-EC",
+                    value: 1056,
+                    min: 0,
+                    max: 2000,
+                    title: "Water EC",
+                    label: "µS/cm",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 500
+                    }, {
+                        color: "#00ff00",
+                        lo: 500,
+                        hi: 1500
+                    }, {
+                        color: "#ff0000",
+                        lo: 1500,
+                        hi: 2000
+                    }]
+                });
+
+                // Water Flow Gauge
+                new JustGage({
+                    id: "gauge-flow",
+                    value: 1.6,
+                    min: 0,
+                    max: 10,
+                    title: "Water Flow",
+                    label: "l/min",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 2
+                    }, {
+                        color: "#00ff00",
+                        lo: 2,
+                        hi: 8
+                    }, {
+                        color: "#ff0000",
+                        lo: 8,
+                        hi: 10
+                    }]
+                });
+
+                // Water Level Gauge
+                new JustGage({
+                    id: "gauge-level",
+                    value: 0,
+                    min: 0,
+                    max: 1,
+                    title: "Water Level",
+                    label: "bool",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00"]
+                });
+
+                // Air Temperature Gauge
+                new JustGage({
+                    id: "gauge-air-temperature",
+                    value: 26.2,
+                    min: 0,
+                    max: 40,
+                    title: "Air Temp",
+                    label: "°C",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 20
+                    }, {
+                        color: "#00ff00",
+                        lo: 20,
+                        hi: 30
+                    }, {
+                        color: "#ff0000",
+                        lo: 30,
+                        hi: 40
+                    }]
+                });
+
+                // Air Humidity Gauge
+                new JustGage({
+                    id: "gauge-humidity",
+                    value: 60,
+                    min: 0,
+                    max: 100,
+                    title: "Air Humidity",
+                    label: "%",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 30
+                    }, {
+                        color: "#00ff00",
+                        lo: 30,
+                        hi: 70
+                    }, {
+                        color: "#ff0000",
+                        lo: 70,
+                        hi: 100
+                    }]
+                });
+
+                // VPD Gauge
+                new JustGage({
+                    id: "gauge-vpd",
+                    value: 1200,
+                    min: 0,
+                    max: 3000,
+                    title: "VPD",
+                    label: "Pa",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 600
+                    }, {
+                        color: "#00ff00",
+                        lo: 600,
+                        hi: 1800
+                    }, {
+                        color: "#ff0000",
+                        lo: 1800,
+                        hi: 3000
+                    }]
+                });
+
+                // Air CO2 Gauge
+                new JustGage({
+                    id: "gauge-co2",
+                    value: 0,
+                    min: 0,
+                    max: 5000,
+                    title: "Air CO2",
+                    label: "PPM",
+                    pointer: true,
+                    gaugeWidthScale: 0.6,
+                    levelColors: ["#ff0000", "#00ff00", "#ff0000"],
+                    customSectors: [{
+                        color: "#ff0000",
+                        lo: 0,
+                        hi: 400
+                    }, {
+                        color: "#00ff00",
+                        lo: 400,
+                        hi: 1000
+                    }, {
+                        color: "#ff0000",
+                        lo: 1000,
+                        hi: 5000
+                    }]
+                });
+            } else {
+                console.error('JustGage library not loaded');
+            }
+        });
+    </script>
+</body>
+</html>
