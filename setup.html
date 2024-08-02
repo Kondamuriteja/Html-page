@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Dashboard</title>
+    <title>Setup Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
@@ -32,13 +32,12 @@
         }
 
         .navbar .menu-icon {
-         font-size: 24px;
-         cursor: pointer;
-         position: absolute;
-         left: 50px;
-         z-index: 1000; /* Lower than .sidenav */
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            left: 50px;
+            z-index: 1000;
         }
-
 
         .navbar .account-info {
             font-size: 18px;
@@ -47,18 +46,17 @@
         }
 
         .sidenav {
-         height: 100%;
-         width: 0;
-         position: fixed;
-         z-index: 1001; /* Higher than .menu-icon */
-         top: 0;
-         left: 0;
-         background-color: #111;
-         overflow-x: hidden;
-         transition: 0.5s;
-         padding-top: 60px;
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1001;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
         }
-
 
         .sidenav a {
             padding: 8px 8px 8px 32px;
@@ -121,7 +119,7 @@
         }
 
         .btn {
-            background-color: #333;
+            background-color: DodgerBlue;
             border: none;
             color: white;
             padding: 10px;
@@ -131,7 +129,7 @@
         }
 
         .btn:hover {
-            background-color: #333;
+            background-color: RoyalBlue;
         }
 
         .btn-control {
@@ -173,36 +171,33 @@
                 <button class="btn btn-control" onclick="controlFan('off')">Turn Off</button>
             </div>
 
-            <!-- Light Control -->
+            <!-- Light Control with Schedule -->
             <div class="control-box">
                 <div class="control-header">Light Control</div>
-                <button class="btn btn-control" onclick="controlLight('on')">Turn On</button>
-                <button class="btn btn-control" onclick="controlLight('off')">Turn Off</button>
+                <input type="time" id="lightStartTime" class="btn-control" placeholder="Start Time">
+                <input type="time" id="lightEndTime" class="btn-control" placeholder="End Time">
+                <button class="btn btn-control" onclick="scheduleLight()">Set Schedule</button>
             </div>
 
-            <!-- Pump Control -->
+            <!-- Pump Control with Calibration -->
             <div class="control-box">
                 <div class="control-header">pH Acid</div>
-                <input type="number" id="pump1" placeholder="Enter ml" class="btn-control">
-                <button class="btn btn-control" onclick="controlPump('pump1')">Set</button>
+                <button class="btn btn-control" onclick="calibratePump('pump1')">Calibrate</button>
             </div>
 
             <div class="control-box">
                 <div class="control-header">pH Base</div>
-                <input type="number" id="pump2" placeholder="Enter ml" class="btn-control">
-                <button class="btn btn-control" onclick="controlPump('pump2')">Set</button>
+                <button class="btn btn-control" onclick="calibratePump('pump2')">Calibrate</button>
             </div>
 
             <div class="control-box">
                 <div class="control-header">Nutrient A</div>
-                <input type="number" id="pump3" placeholder="Enter ml" class="btn-control">
-                <button class="btn btn-control" onclick="controlPump('pump3')">Set</button>
+                <button class="btn btn-control" onclick="calibratePump('pump3')">Calibrate</button>
             </div>
 
             <div class="control-box">
                 <div class="control-header">Nutrient B</div>
-                <input type="number" id="pump4" placeholder="Enter ml" class="btn-control">
-                <button class="btn btn-control" onclick="controlPump('pump4')">Set</button>
+                <button class="btn btn-control" onclick="calibratePump('pump4')">Calibrate</button>
             </div>
         </div>
     </div>
@@ -221,15 +216,53 @@
             // Add your logic to control the fan here
         }
 
-        function controlLight(state) {
-            console.log('Light turned ' + state);
-            // Add your logic to control the light here
+        function scheduleLight() {
+            const startTime = document.getElementById('lightStartTime').value;
+            const endTime = document.getElementById('lightEndTime').value;
+            console.log('Light scheduled from ' + startTime + ' to ' + endTime);
+            
+            // Logic to send this data to the backend for scheduling the light
+            // Example: send to server
+            fetch('/schedule_light', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    startTime: startTime,
+                    endTime: endTime
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
 
-        function controlPump(pump) {
-            const value = document.getElementById(pump).value;
-            console.log(pump + ' set to ' + value + ' ml');
-            // Add your logic to control the pumps here
+        function calibratePump(pump) {
+            console.log(pump + ' calibrated');
+            
+            // Logic to send this data to the backend for pump calibration
+            // Example: send to server
+            fetch('/calibrate_pump', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pump: pump
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
     </script>
 </body>
